@@ -20,11 +20,18 @@ clientSystem.update = function () {
 clientSystem.onClientEnteredWorld = function(eventData) {
     let loadEventData = this.createEventData("minecraft:load_ui");
     loadEventData.data.path = "hello.html";
-    loadEventData.data.options.is_showing_menu = false;
+    loadEventData.data.options.is_showing_menu = true;
     loadEventData.data.options.absorbs_input = true;
+    loadEventData.data.options.render_game_behind = true;
+    loadEventData.data.options.always_accepts_input = true;
     this.broadcastEvent("minecraft:load_ui", loadEventData);
+    Utils.broadcastOnChat(this, "Bienvenid@ a minecraft!");
 };
 
 clientSystem.onUIMessage = function(eventData) {
     Utils.broadcastOnChat(this, `ui event: ${JSON.stringify(eventData)}`);
+
+    const unloadEventData = this.createEventData("minecraft:unload_ui");
+    unloadEventData.data.path = "hello.html";
+    this.broadcastEvent("minecraft:unload_ui", unloadEventData);
 };

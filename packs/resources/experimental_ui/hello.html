@@ -19,11 +19,11 @@
 
     // Get a handle to the scripting interface on creation.
     // The script interface can trigger events to the client script
-    let scriptInterface = undefined;
-    engine.on("facet:updated:scripting", function(interface) {
+    let scriptInterface = null;
+    engine.on("facet:updated:core.scripting", function (interface) {
         scriptInterface = interface;
     });
-    engine.trigger("facet:request", ["scripting"]);
+    engine.trigger("facet:request", ["core.scripting"]);
 
     // Grab the start button element
     let startButton = document.getElementById("_start_");
