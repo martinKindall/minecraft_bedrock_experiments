@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<script src="UIEngine.js"></script>
+	<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div id="_body_" class="screenBox">
+	<div class="GameMessage">
+		<button id="_start_">Start</button>
+		<button id="_leave_">Leave</button>
+	</div>
+</div>
+</body>
+
+<script type="text/javascript">
+
+    // Get a handle to the scripting interface on creation.
+    // The script interface can trigger events to the client script
+    let scriptInterface = undefined;
+    engine.on("facet:updated:scripting", function(interface) {
+        scriptInterface = interface;
+    });
+    engine.trigger("facet:request", ["scripting"]);
+
+    // Grab the start button element
+    let startButton = document.getElementById("_start_");
+    // When the start button is pressed send a message to the client script
+    startButton.addEventListener("click", function () {
+        scriptInterface.triggerEvent("StartPressed");
+    });
+</script>
+</html>
