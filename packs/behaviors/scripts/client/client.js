@@ -21,9 +21,6 @@ clientSystem.onClientEnteredWorld = function(eventData) {
     let loadEventData = this.createEventData("minecraft:load_ui");
     loadEventData.data.path = "hello.html";
     loadEventData.data.options.is_showing_menu = true;
-    loadEventData.data.options.absorbs_input = true;
-    loadEventData.data.options.render_game_behind = true;
-    loadEventData.data.options.always_accepts_input = true;
     this.broadcastEvent("minecraft:load_ui", loadEventData);
     Utils.broadcastOnChat(this, "Bienvenid@ a minecraft!");
 };
