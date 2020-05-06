@@ -1,0 +1,35 @@
+{
+  "format_version": 1,
+  "header": {
+    "name": "gui-tutorial Behaviors",
+    "description": "learning basics of gui",
+    "uuid": "fe5fc3cc-b158-485f-9236-c6824b4d0355",
+    "version": [
+      1,
+      0,
+      0
+    ]
+  },
+  "modules": [
+    {
+      "description": "behaviours for gui-tutorial",
+      "type": "client_data",
+      "uuid": "962e452f-46ba-4e53-a6b5-017894eba37f",
+      "version": [
+        1,
+        0,
+        0
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "uuid": "7692f54d-2fe3-4623-8d68-028d94b7c73e",
+      "version": [
+        1,
+        0,
+        0
+      ]
+    }
+  ]
+}

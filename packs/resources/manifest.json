@@ -1,0 +1,25 @@
+{
+  "format_version": 1,
+  "header": {
+    "name": "gui-tutorial Resources",
+    "description": "learning basics of gui",
+    "uuid": "7692f54d-2fe3-4623-8d68-028d94b7c73e",
+    "version": [
+      1,
+      0,
+      0
+    ]
+  },
+  "modules": [
+    {
+      "description": "Resources for gui-tutorial",
+      "type": "resources",
+      "uuid": "17a82d60-5720-4ebd-bcb3-f3b4761b82f8",
+      "version": [
+        1,
+        0,
+        0
+      ]
+    }
+  ]
+}
