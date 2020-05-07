@@ -9,6 +9,7 @@ clientSystem.initialize = function () {
         (eventData) => this.onClientEnteredWorld(eventData)
     );
     this.listenForEvent("minecraft:ui_event", (eventData) => this.onUIMessage(eventData));
+    this.registerEventData("my_events:start_game", {});
 };
 
 // per-tick updates
@@ -31,4 +32,11 @@ clientSystem.onUIMessage = function(eventData) {
     const unloadEventData = this.createEventData("minecraft:unload_ui");
     unloadEventData.data.path = "hello.html";
     this.broadcastEvent("minecraft:unload_ui", unloadEventData);
+
+    this.sendStartGameEvent();
+};
+
+clientSystem.sendStartGameEvent = function() {
+    let startEventData = this.createEventData("my_events:start_game");
+    this.broadcastEvent("my_events:start_game", startEventData);
 };
