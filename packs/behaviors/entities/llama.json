@@ -7,9 +7,54 @@
       "is_summonable": true,
       "is_experimental": false
     },
+    "component_groups": {
+      "minecraft:llama_adult": {
+        "minecraft:collision_box": {
+          "width": 0.9,
+          "height": 1.87
+        }
+      },
+      "minecraft:strength_1": {
+        "minecraft:strength": {
+          "value": 1,
+          "max": 5
+        }
+      },
+      "minecraft:llama_tamed": {
+        "minecraft:is_tamed": {
+        },
+        "minecraft:rideable": {
+          "priority": 0,
+          "seat_count": 1,
+          "crouching_skip_interact": true,
+          "family_types": [
+            "player"
+          ],
+          "interact_text": "action.interact.ride.horse",
+          "seats": {
+            "position": [ 0.0, 1.1, -0.2 ]
+          }
+
+        },
+        "minecraft:inventory": {
+          "inventory_size": 16,
+          "container_type": "horse",
+          "additional_slots_per_strength": 3
+        },
+        "minecraft:equippable": {
+          "slots": [
+            {
+              "slot": 1,
+              "item": "carpet",
+              "accepted_items": [ "carpet" ]
+            }
+          ]
+        }
+      }
+    },
     "components": {
       "minecraft:type_family": {
-        "family": [ "llama" ]
+        "family": [ "llama", "mob" ]
       },
       "minecraft:nameable": {
       },
@@ -21,13 +66,43 @@
       },
       "minecraft:physics": {
       },
-      "minecraft:movement": {
-        "value": 0.3
-      },
       "minecraft:behavior.look_at_player": {
         "priority": 7,
         "look_distance": 6.0,
         "probability": 1.00
+      },
+    },
+    "events": {
+      "minecraft:entity_spawned": {
+        "sequence": [
+          {
+            "randomize": [
+              {
+                "weight": 100,
+                "remove": {
+                },
+                "add": {
+                  "component_groups": [
+                    "minecraft:llama_adult",
+                    "minecraft:llama_tamed"
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "randomize": [
+              {
+                "weight": 100,
+                "add": {
+                  "component_groups": [
+                    "minecraft:strength_1"
+                  ]
+                }
+              }
+            ]
+          }
+        ]
       }
     }
   }
