@@ -8,6 +8,55 @@
       "is_experimental": false
     },
     "component_groups": {
+      "minecraft:llama_wild": {
+        "minecraft:rideable": {
+          "seat_count": 1,
+          "family_types": [
+            "player"
+          ],
+          "interact_text": "action.interact.mount",
+          "seats": {
+            "position": [ 0.0, 1.25, -0.3 ]
+          }
+        },
+        "minecraft:tamemount": {
+          "min_temper": 0,
+          "max_temper": 30,
+          "feed_text": "action.interact.feed",
+          "ride_text": "action.interact.mount",
+          "feed_items": [
+            {
+              "item": "wheat",
+              "temper_mod": 3
+            },
+            {
+              "item": "hay_block",
+              "temper_mod": 6
+            }
+          ],
+          "auto_reject_items": [
+            {
+              "item": "horsearmorleather"
+            },
+            {
+              "item": "horsearmoriron"
+            },
+            {
+              "item": "horsearmorgold"
+            },
+            {
+              "item": "horsearmordiamond"
+            },
+            {
+              "item": "saddle"
+            }
+          ],
+          "tame_event": {
+            "event": "minecraft:on_tame",
+            "target": "self"
+          }
+        }
+      },
       "minecraft:llama_adult": {
         "minecraft:collision_box": {
           "width": 0.9,
@@ -23,6 +72,8 @@
       "minecraft:llama_tamed": {
         "minecraft:is_tamed": {
         },
+        "minecraft:is_chested": {
+        },
         "minecraft:rideable": {
           "priority": 0,
           "seat_count": 1,
@@ -34,7 +85,6 @@
           "seats": {
             "position": [ 0.0, 1.1, -0.2 ]
           }
-
         },
         "minecraft:inventory": {
           "inventory_size": 16,
@@ -70,7 +120,7 @@
         "priority": 7,
         "look_distance": 6.0,
         "probability": 1.00
-      },
+      }
     },
     "events": {
       "minecraft:entity_spawned": {
@@ -84,7 +134,7 @@
                 "add": {
                   "component_groups": [
                     "minecraft:llama_adult",
-                    "minecraft:llama_tamed"
+                    "minecraft:llama_wild"
                   ]
                 }
               }
@@ -103,6 +153,18 @@
             ]
           }
         ]
+      },
+      "minecraft:on_tame": {
+        "remove": {
+          "component_groups": [
+            "minecraft:llama_wild"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "minecraft:llama_tamed"
+          ]
+        }
       }
     }
   }
