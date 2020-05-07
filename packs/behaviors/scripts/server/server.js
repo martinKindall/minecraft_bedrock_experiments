@@ -10,6 +10,12 @@ const globals = {
 serverSystem.initialize = function () {
     this.listenForEvent("my_events:start_game", eventData => this.onStartGame(eventData));
     globals.queryAllEntities = this.registerQuery();
+
+    const scriptLoggerConfig = this.createEventData("minecraft:script_logger_config");
+    scriptLoggerConfig.data.log_errors = true;
+    scriptLoggerConfig.data.log_information = true;
+    scriptLoggerConfig.data.log_warnings = true;
+    this.broadcastEvent("minecraft:script_logger_config", scriptLoggerConfig);
 };
 
 // per-tick updates

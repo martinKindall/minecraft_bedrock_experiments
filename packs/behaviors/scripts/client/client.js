@@ -10,6 +10,12 @@ clientSystem.initialize = function () {
     );
     this.listenForEvent("minecraft:ui_event", (eventData) => this.onUIMessage(eventData));
     this.registerEventData("my_events:start_game", {});
+
+    const scriptLoggerConfig = this.createEventData("minecraft:script_logger_config");
+    scriptLoggerConfig.data.log_errors = true;
+    scriptLoggerConfig.data.log_information = true;
+    scriptLoggerConfig.data.log_warnings = true;
+    this.broadcastEvent("minecraft:script_logger_config", scriptLoggerConfig);
 };
 
 // per-tick updates
