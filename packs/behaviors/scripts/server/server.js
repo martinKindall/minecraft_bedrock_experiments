@@ -18,7 +18,7 @@ serverSystem.update = function () {
 };
 
 serverSystem.onStartGame = function(eventData) {
-    this.executeCommand("/tp @a 0 8 0", (commandData) => this.commandCallback(commandData) );
+    this.executeCommand("/tp @a 0 8 0 90 0", (commandData) => this.commandCallback(commandData) );
     this.cleanWorld();
     this.createMyEntity();
 };
@@ -51,10 +51,10 @@ serverSystem.addGameRules = function() {
 };
 
 serverSystem.createMyEntity = function () {
-    let myEntity = this.createEntity("entity", "minecraft:skeleton");
+    let myEntity = this.createEntity("entity", "minecraft:llama");
     let posComponent = this.createComponent(myEntity, "minecraft:position");
     posComponent.data.x = -4.5;
-    posComponent.data.y = 8;
+    posComponent.data.y = 5;
     posComponent.data.z = 0.5;
     this.applyComponentChanges(myEntity, posComponent);
 
