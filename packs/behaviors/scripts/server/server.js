@@ -62,4 +62,19 @@ serverSystem.createMyEntity = function () {
     rotComponent.data.x = 0;
     rotComponent.data.y = 180;
     this.applyComponentChanges(myEntity, rotComponent);
+
+    this.createAndExecute3x3FillCommand(myEntity, "soul_sand");
+};
+
+serverSystem.createAndExecute3x3FillCommand = function (entity, blockName) {
+    let posComponent = this.getComponent(entity, "minecraft:position");
+    if(posComponent) {
+        let fillCommand = "/fill ";
+        let lowX = posComponent.data.x - 1;
+        let lowZ = posComponent.data.z - 1;
+        let highX = posComponent.data.x + 1;
+        let highZ = posComponent.data.z + 1;
+        fillCommand += lowX + " 3 " + lowZ + " " + highX + " 3 " + highZ + " " + blockName;
+        this.executeCommand(fillCommand, (commandData) => this.commandCallback(commandData) );
+    }
 };
