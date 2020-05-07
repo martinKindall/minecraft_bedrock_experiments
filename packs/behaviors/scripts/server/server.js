@@ -2,9 +2,14 @@ import Utils from "../utils/Utils";
 
 const serverSystem = server.registerSystem(0, 0);
 
+const globals = {
+    queryAllEntities: null
+};
+
 // Setup which events to listen for
 serverSystem.initialize = function () {
     this.listenForEvent("my_events:start_game", eventData => this.onStartGame(eventData));
+    globals.queryAllEntities = this.registerQuery();
 };
 
 // per-tick updates
@@ -14,19 +19,47 @@ serverSystem.update = function () {
 
 serverSystem.onStartGame = function(eventData) {
     this.executeCommand("/tp @a 0 8 0", (commandData) => this.commandCallback(commandData) );
-
-    this.createLlama();
+    this.cleanWorld();
+    this.createMyEntity();
 };
 
 serverSystem.commandCallback = function(commandData) {
     Utils.broadcastOnChat(this, `command executed: ${JSON.stringify(commandData)}`);
 };
 
-serverSystem.createLlama = function () {
-    let llama = this.createEntity("entity", "minecraft:llama");
-    let posComponent = this.createComponent(llama, "minecraft:position");
-    posComponent.data.x = -6.5;
-    posComponent.data.y = 5;
+serverSystem.cleanWorld = function () {
+    this.addGameRules();
+    this.cleanEntities();
+};
+
+serverSystem.cleanEntities = function () {
+    let allEntities = this.getEntitiesFromQuery(globals.queryAllEntities);
+    let size = allEntities.length;
+    for (let index = 0; index < size; ++index) {
+        if (allEntities[index].__identifier__ !== "minecraft:player") {
+            Utils.broadcastOnChat(this, `destroying: ${JSON.stringify(allEntities[index])}`);
+            this.destroyEntity(allEntities[index]);
+        }
+    }
+};
+
+serverSystem.addGameRules = function() {
+    this.executeCommand("/gamerule doMobLoot false", (commandData) => this.commandCallback(commandData) );
+    this.executeCommand("/gamerule doMobSpawning false", (commandData) => this.commandCallback(commandData) );
+    this.executeCommand("/gamerule doWeatherCycle false", (commandData) => this.commandCallback(commandData) );
+    this.executeCommand("/gamerule doDaylightCycle false", (commandData) => this.commandCallback(commandData) );
+};
+
+serverSystem.createMyEntity = function () {
+    let myEntity = this.createEntity("entity", "minecraft:skeleton");
+    let posComponent = this.createComponent(myEntity, "minecraft:position");
+    posComponent.data.x = -4.5;
+    posComponent.data.y = 8;
     posComponent.data.z = 0.5;
-    this.applyComponentChanges(llama, posComponent);
+    this.applyComponentChanges(myEntity, posComponent);
+
+    let rotComponent = this.createComponent(myEntity, "minecraft:rotation");
+    rotComponent.data.x = 0;
+    rotComponent.data.y = 180;
+    this.applyComponentChanges(myEntity, rotComponent);
 };
