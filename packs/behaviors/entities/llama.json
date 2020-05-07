@@ -20,6 +20,14 @@
         }
       },
       "minecraft:physics": {
+      },
+      "minecraft:movement": {
+        "value": 0.3
+      },
+      "minecraft:behavior.look_at_player": {
+        "priority": 7,
+        "look_distance": 6.0,
+        "probability": 1.00
       }
     }
   }
