@@ -27,10 +27,23 @@ serverSystem.onStartGame = function(eventData) {
     this.executeCommand("/tp @a 0 8 0 90 0", (commandData) => this.commandCallback(commandData) );
     this.cleanWorld();
     this.createMyEntity();
+    this.experimentOnEntity();
+};
+
+serverSystem.experimentOnEntity = function() {
+    // let allEntities = this.getEntitiesFromQuery(globals.queryAllEntities);
+    // let size = allEntities.length;
+    // for (let index = 0; index < size; ++index) {
+    //     const currentEntity = allEntities[index];
+    //     if (currentEntity.__identifier__ === "minecraft:llama") {
+    //         const tameComponent = this.getComponent(currentEntity, "minecraft:llama_tamed");
+    //         Utils.broadcastOnChat(this, `Llama : ${JSON.stringify(tameComponent)}`);
+    //     }
+    // }
 };
 
 serverSystem.commandCallback = function(commandData) {
-    Utils.broadcastOnChat(this, `command executed: ${JSON.stringify(commandData)}`);
+    // Utils.broadcastOnChat(this, `command executed: ${JSON.stringify(commandData)}`);
 };
 
 serverSystem.cleanWorld = function () {
@@ -43,7 +56,7 @@ serverSystem.cleanEntities = function () {
     let size = allEntities.length;
     for (let index = 0; index < size; ++index) {
         if (allEntities[index].__identifier__ !== "minecraft:player") {
-            Utils.broadcastOnChat(this, `destroying: ${JSON.stringify(allEntities[index])}`);
+            // Utils.broadcastOnChat(this, `destroying: ${JSON.stringify(allEntities[index])}`);
             this.destroyEntity(allEntities[index]);
         }
     }
