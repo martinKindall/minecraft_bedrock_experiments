@@ -9,76 +9,10 @@
     },
     "component_groups": {
       "minecraft:llama_wild": {
-        "minecraft:lookat": {
-          "allow_invulnerable": true,
-          "set_target": true,
-          "filters": { "test" :  "is_family", "subject" : "other", "value" :  "player"}
-        },
-        "minecraft:behavior.nearest_attackable_target": {
-          "priority": 2,
-          "attack_interval": 16,
-          "entity_types": [
-            {
-              "filters": {
-                "all_of": [
-                  { "test" :  "is_family", "subject" : "other", "value" :  "player"}
-                ]
-              },
-              "max_dist": 10
-            }
-          ],
-          "must_see": false,
-          "must_reach": true
-        },
-        "minecraft:on_target_acquired": {
-          "event": "minecraft:on_tame",
-          "target": "self"
-        },
-        "minecraft:on_hurt_by_player": {
-          "event": "minecraft:on_tame",
-          "target": "self"
-        },
-        "minecraft:rideable": {
-          "seat_count": 1,
-          "family_types": [
-            "player"
-          ],
-          "interact_text": "action.interact.mount",
-          "seats": {
-            "position": [ 0.0, 1.25, -0.3 ]
-          }
-        },
-        "minecraft:tamemount": {
-          "min_temper": 0,
-          "max_temper": 30,
-          "feed_text": "action.interact.feed",
-          "ride_text": "action.interact.mount",
-          "feed_items": [
-            {
-              "item": "wheat",
-              "temper_mod": 3
-            },
-            {
-              "item": "hay_block",
-              "temper_mod": 6
-            }
-          ],
-          "auto_reject_items": [
-            {
-              "item": "horsearmorleather"
-            },
-            {
-              "item": "horsearmoriron"
-            },
-            {
-              "item": "horsearmorgold"
-            },
-            {
-              "item": "horsearmordiamond"
-            },
-            {
-              "item": "saddle"
-            }
+        "minecraft:tameable": {
+          "probability": 1,
+          "tame_items": [
+            "wheat"
           ],
           "tame_event": {
             "event": "minecraft:on_tame",

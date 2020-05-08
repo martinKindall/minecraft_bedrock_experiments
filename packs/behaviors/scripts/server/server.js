@@ -24,7 +24,7 @@ serverSystem.update = function () {
 };
 
 serverSystem.onStartGame = function(eventData) {
-    this.executeCommand("/tp @a 0 8 0 90 0", (commandData) => this.commandCallback(commandData) );
+    this.executeCommand("/tp @a 0 6 0 90 0", (commandData) => this.commandCallback(commandData) );
     this.cleanWorld();
     this.createMyEntity();
     this.experimentOnEntity();
