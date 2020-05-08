@@ -1,0 +1,205 @@
+{
+  "format_version": "1.8.0",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "minecraft:llama2",
+      "is_spawnable": true,
+      "is_summonable": true,
+      "is_experimental": false
+    },
+    "component_groups": {
+      "minecraft:llama_baby": {
+        "minecraft:is_baby": {
+        },
+        "minecraft:scale": {
+          "value": 0.5
+        },
+        "minecraft:ageable": {
+          "duration": 1200,
+          "feed_items": [
+            {
+              "item": "wheat",
+              "growth": 0.1
+            },
+            {
+              "item": "hay_block",
+              "growth": 0.9
+            }
+          ],
+          "grow_up": {
+            "event": "minecraft:ageable_grow_up",
+            "target": "self"
+          }
+        },
+        "minecraft:behavior.follow_parent": {
+          "priority": 5,
+          "speed_multiplier": 1.0
+        }
+      },
+      "minecraft:llama_wild": {
+        "minecraft:tameable": {
+          "probability": 1,
+          "tame_items": [
+            "wheat"
+          ],
+          "tame_event": {
+            "event": "minecraft:on_tame",
+            "target": "self"
+          }
+        }
+      },
+      "minecraft:llama_creamy": {
+        "minecraft:variant": {
+          "value": 0
+        }
+      },
+      "minecraft:llama_adult": {
+        "minecraft:collision_box": {
+          "width": 0.9,
+          "height": 1.87
+        }
+      },
+      "minecraft:strength_1": {
+        "minecraft:strength": {
+          "value": 1,
+          "max": 5
+        }
+      },
+      "minecraft:llama_tamed": {
+        "minecraft:is_tamed": {
+        },
+        "minecraft:is_chested": {
+        },
+        "minecraft:behavior.follow_owner": {
+          "priority": 2,
+          "speed_multiplier": 1.0,
+          "start_distance": 5,
+          "stop_distance": 1
+        },
+        "minecraft:rideable": {
+          "priority": 0,
+          "seat_count": 1,
+          "crouching_skip_interact": true,
+          "family_types": [
+            "player"
+          ],
+          "interact_text": "action.interact.ride.horse",
+          "seats": {
+            "position": [ 0.0, 1.1, -0.2 ]
+          }
+        },
+        "minecraft:inventory": {
+          "inventory_size": 16,
+          "container_type": "horse",
+          "additional_slots_per_strength": 3
+        },
+        "minecraft:equippable": {
+          "slots": [
+            {
+              "slot": 1,
+              "item": "carpet",
+              "accepted_items": [ "carpet" ]
+            }
+          ]
+        }
+      }
+    },
+    "components": {
+      "minecraft:behavior.look_at_player": {
+        "priority": 6,
+        "target_distance": 6.0,
+        "probability": 0.02
+      },
+      "minecraft:behavior.random_look_around": {
+        "priority": 7
+      },
+      "minecraft:type_family": {
+        "family": [ "llama", "mob" ]
+      },
+      "minecraft:nameable": {
+      },
+      "minecraft:health": {
+        "value": {
+          "range_min": 15,
+          "range_max": 30
+        }
+      },
+      "minecraft:physics": {
+      },
+      "minecraft:movement": {
+        "value": 0.25
+      },
+      "minecraft:navigation.walk": {
+        "can_path_over_water": true,
+        "avoid_damage_blocks": true
+      },
+      "minecraft:behavior.random_stroll": {
+        "priority": 6,
+        "speed_multiplier": 0.7
+      },
+      "minecraft:movement.basic": {
+      },
+      "minecraft:mark_variant": {
+        "value": 0
+      }
+    },
+    "events": {
+      "minecraft:entity_spawned": {
+        "sequence": [
+          {
+            "randomize": [
+              {
+                "weight": 100,
+                "remove": {
+                },
+                "add": {
+                  "component_groups": [
+                    "minecraft:llama_baby",
+                    "minecraft:llama_creamy"
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "randomize": [
+              {
+                "weight": 100,
+                "add": {
+                  "component_groups": [
+                    "minecraft:strength_1"
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "minecraft:on_tame": {
+        "remove": {
+          "component_groups": [
+            "minecraft:llama_wild"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "minecraft:llama_tamed"
+          ]
+        }
+      },
+      "minecraft:ageable_grow_up": {
+        "remove": {
+          "component_groups": [
+            "minecraft:llama_baby"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "minecraft:llama_adult",
+            "minecraft:llama_wild"
+          ]
+        }
+      }
+    }
+  }
+}
