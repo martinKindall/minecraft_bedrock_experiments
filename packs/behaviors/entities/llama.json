@@ -9,6 +9,11 @@
     },
     "component_groups": {
       "minecraft:llama_wild": {
+        "minecraft:lookat": {
+          "allow_invulnerable": true,
+          "set_target": true,
+          "filters": { "test" :  "is_family", "subject" : "other", "value" :  "player"}
+        },
         "minecraft:behavior.nearest_attackable_target": {
           "priority": 2,
           "attack_interval": 16,
