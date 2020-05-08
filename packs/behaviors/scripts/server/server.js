@@ -3,12 +3,15 @@ import Utils from "../utils/Utils";
 const serverSystem = server.registerSystem(0, 0);
 
 const globals = {
-    queryAllEntities: null
+    queryAllEntities: null,
+    toggleDayNightState: false
 };
 
 // Setup which events to listen for
 serverSystem.initialize = function () {
     this.listenForEvent("my_events:start_game", eventData => this.onStartGame(eventData));
+    this.listenForEvent("minecraft:block_interacted_with", eventData => this.onBlockInteraction(eventData));
+
     globals.queryAllEntities = this.registerQuery();
 
     const scriptLoggerConfig = this.createEventData("minecraft:script_logger_config");
@@ -28,6 +31,20 @@ serverSystem.onStartGame = function(eventData) {
     this.cleanWorld();
     this.createMyEntity();
     this.experimentOnEntity();
+};
+
+serverSystem.onBlockInteraction = function(eventData) {
+    this.dayNightLeverInteraction(eventData);
+};
+
+serverSystem.dayNightLeverInteraction = function(eventData) {
+    const blockPosition = eventData.data.block_position;
+    if (blockPosition.x === 0 && blockPosition.y === 5 && blockPosition.z === 0) {
+        this.executeCommand(
+            `/time set ${toggleDayNight()}`,
+            (commandData) => this.commandCallback(commandData)
+        );
+    }
 };
 
 serverSystem.experimentOnEntity = function() {
@@ -97,3 +114,9 @@ serverSystem.createAndExecute3x3FillCommand = function (entity, blockName) {
         this.executeCommand(fillCommand, (commandData) => this.commandCallback(commandData) );
     }
 };
+
+function toggleDayNight() {
+    const time = globals.toggleDayNightState? "day": "night";
+    globals.toggleDayNightState = !globals.toggleDayNightState;
+    return time;
+}
