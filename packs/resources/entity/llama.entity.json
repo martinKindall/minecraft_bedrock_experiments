@@ -36,11 +36,18 @@
         "setup": "animation.llama.setup",
         "walk": "animation.quadruped.walk",
         "look_at_target": "animation.common.look_at_target",
-        "baby_transform": "animation.llama.baby_transform"
+        "baby_transform": "animation.llama.baby_transform",
+        "test_events":  "animation.llama.test_events"
+      },
+      "scripts": {
+        "animate": [
+          "test_events"
+        ]
       },
       "animation_controllers": [
         { "move": "controller.animation.llama.move" },
-        { "baby": "controller.animation.llama.baby" }
+        { "baby": "controller.animation.llama.baby" },
+        { "hello":  "controller.animation.llama.hello"}
       ],
       "render_controllers": [ "controller.render.llama" ],
       "spawn_egg": {
