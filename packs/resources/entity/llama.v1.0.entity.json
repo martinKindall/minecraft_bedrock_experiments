@@ -38,11 +38,6 @@
         "baby_transform": "animation.llama.baby_transform.v1.0",
         "test_events":  "animation.llama.test_events"
       },
-      "scripts": {
-        "animate": [
-          "test_events"
-        ]
-      },
       "animation_controllers": [
         { "move": "controller.animation.llama.move" },
         { "baby": "controller.animation.llama.baby" },
