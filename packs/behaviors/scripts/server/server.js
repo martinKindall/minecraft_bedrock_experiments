@@ -19,7 +19,6 @@ serverSystem.initialize = function () {
     scriptLoggerConfig.data.log_information = true;
     scriptLoggerConfig.data.log_warnings = true;
     this.broadcastEvent("minecraft:script_logger_config", scriptLoggerConfig);
-
     this.registerEventData("guitutorial:player_set_name_skelly", {playerData: null});
 };
 
@@ -34,11 +33,16 @@ serverSystem.onStartGame = function(eventData) {
     this.createEntities();
 };
 
+
 serverSystem.onBlockInteraction = function(eventData) {
+    const dayNightLeverPosition = {x: 0, y: 5, z: 0};
+
     const player = eventData.data.player;
     const blockPosition = eventData.data.block_position;
-    if (blockPosition.x === 0 && blockPosition.y === 5 && blockPosition.z === 0) {
-        this.dayNightLeverInteraction();
+    if (blockPosition.x === dayNightLeverPosition.x &&
+        blockPosition.y === dayNightLeverPosition.y &&
+        blockPosition.z === dayNightLeverPosition.z) {
+        this.dayNightLeverInteraction(dayNightLeverPosition);
     } else if (blockPosition.x === 4 && blockPosition.y === 4 && blockPosition.z === -2) {
         this.setSkellyNameInteraction(player);
     }
@@ -54,9 +58,9 @@ serverSystem.setSkellyNameInteraction = function(player) {
     }
 };
 
-serverSystem.dayNightLeverInteraction = function() {
+serverSystem.dayNightLeverInteraction = function(interactionPosition) {
     this.executeCommand(
-        `/time set ${toggleDayNight()}`,
+        `/time set ${this.toggleDayNight(interactionPosition)}`,
         (commandData) => this.commandCallback(commandData)
     );
 };
@@ -88,6 +92,17 @@ serverSystem.addGameRules = function() {
 };
 
 serverSystem.createEntitySetPositionRotation = function(indentifier, position, rotation) {
+    this.createEntitySetPositionRotationWithCallback(
+        indentifier,
+        position,
+        rotation,
+        (entity) => {
+            this.createAndExecute3x3FillCommand(entity, "warped_nylium");
+        }
+    );
+};
+
+serverSystem.createEntitySetPositionRotationWithCallback = function(indentifier, position, rotation, callbackOnEntity) {
     let myEntity = this.createEntity("entity", indentifier);
     let posComponent = this.createComponent(myEntity, "minecraft:position");
     posComponent.data.x = position.x;
@@ -100,7 +115,9 @@ serverSystem.createEntitySetPositionRotation = function(indentifier, position, r
     rotComponent.data.y = rotation.y;
     this.applyComponentChanges(myEntity, rotComponent);
 
-    this.createAndExecute3x3FillCommand(myEntity, "warped_nylium");
+    if (!!callbackOnEntity) {
+        callbackOnEntity(myEntity);
+    }
 };
 
 serverSystem.createEntities = function () {
@@ -155,8 +172,36 @@ serverSystem.createAndExecute3x3FillCommand = function (entity, blockName) {
     }
 };
 
-function toggleDayNight() {
+serverSystem.onNightSet = function(interactionPosition) {
+    this.createRandomEndermans(interactionPosition);
+};
+
+serverSystem.createRandomEndermans = function(interactionPosition) {
+    [...Array(4)].forEach( _ => {
+        this.createEntitySetPositionRotationWithCallback(
+            "minecraft:enderman",
+            {
+                x: interactionPosition.x + randInt(-4, 4),
+                y: interactionPosition.y,
+                z: interactionPosition.z + randInt(-4, 4)
+            },
+            {
+                x: 0,
+                y: 180
+            }
+        );
+    });
+};
+
+serverSystem.toggleDayNight = function(interactionPosition) {
     const time = globals.toggleDayNightState? "day": "night";
+    if (!globals.toggleDayNightState) {
+        this.onNightSet(interactionPosition);
+    }
     globals.toggleDayNightState = !globals.toggleDayNightState;
     return time;
+};
+
+function randInt(min, max) {
+    return Math.random() * (max - min) + min;
 }
