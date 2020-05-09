@@ -2,6 +2,11 @@ import Utils from "../utils/Utils";
 
 const clientSystem = client.registerSystem(0, 0);
 
+const globals = {
+    playerData: null
+};
+
+
 // Setup which events to listen for
 clientSystem.initialize = function () {
     this.listenForEvent(
@@ -12,7 +17,7 @@ clientSystem.initialize = function () {
     this.registerEventData("my_events:start_game", {});
     this.listenForEvent(
         "guitutorial:player_set_name_skelly",
-        (playerData) => this.onSetSkellyName(playerData));
+        (eventData) => this.onSetSkellyName(eventData));
 
     const scriptLoggerConfig = this.createEventData("minecraft:script_logger_config");
     scriptLoggerConfig.data.log_errors = true;
@@ -28,6 +33,7 @@ clientSystem.update = function () {
 
 
 clientSystem.onClientEnteredWorld = function(eventData) {
+    globals.playerData = eventData.data.player;
     let loadEventData = this.createEventData("minecraft:load_ui");
     loadEventData.data.path = "hello.html";
     loadEventData.data.options.is_showing_menu = true;
@@ -35,12 +41,14 @@ clientSystem.onClientEnteredWorld = function(eventData) {
     Utils.broadcastOnChat(this, "Bienvenid@ a minecraft!");
 };
 
-clientSystem.onSetSkellyName = function(playerData) {
-    Utils.broadcastOnChat(this, `skelly player event: ${JSON.stringify(playerData)}`);
-    // let loadEventData = this.createEventData("minecraft:load_ui");
-    // loadEventData.data.path = "hello.html";
-    // loadEventData.data.options.is_showing_menu = true;
-    // this.broadcastEvent("minecraft:load_ui", loadEventData);
+clientSystem.onSetSkellyName = function(eventData) {
+    Utils.broadcastOnChat(this, `skelly player event: ${JSON.stringify(eventData)}`);
+    if (isPlayerEqual(globals.playerData, eventData.data.playerData)) {
+        let loadEventData = this.createEventData("minecraft:load_ui");
+        loadEventData.data.path = "skelly.html";
+        loadEventData.data.options.is_showing_menu = true;
+        this.broadcastEvent("minecraft:load_ui", loadEventData);
+    }
 };
 
 clientSystem.onUIMessage = function(eventData) {
@@ -65,3 +73,12 @@ clientSystem.sendStartGameEvent = function() {
     let startEventData = this.createEventData("my_events:start_game");
     this.broadcastEvent("my_events:start_game", startEventData);
 };
+
+function isPlayerEqual(playerData1, playerData2) {
+    return areUniqueIdEqual(playerData1.__unique_id__, playerData2.__unique_id__);
+}
+
+function areUniqueIdEqual(uniqueId1, uniqueId2) {
+    return uniqueId1["64bit_low"] == uniqueId2["64bit_low"] &&
+        uniqueId1["64bit_high"] == uniqueId2["64bit_high"];
+}

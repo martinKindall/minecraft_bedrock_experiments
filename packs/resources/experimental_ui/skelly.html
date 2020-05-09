@@ -1,19 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-	<meta charset="UTF-8">
-	<title><!DOCTYPE html>
-		<html>
-		<head>
-			<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-			<script src="UIEngine.js"></script>
-			<link rel="stylesheet" href="styles.css" />
-		</head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<script src="UIEngine.js"></script>
+	<link rel="stylesheet" href="styles.css" />
+</head>
 <body>
 <div id="_body_" class="screenBox">
 	<div class="GameMessage">
-		<label for="inputName">Escribe un nombre:</label><br><br>
+		<p>Escribe un nombre:</p>
 		<input type="text" id="inputName" name="inputName"/>
+		<br/><br/>
 		<button id="saveName">Guardar</button>
 	</div>
 </div>
@@ -37,15 +35,10 @@
         scriptInterface.triggerEvent(
             JSON.stringify({
                 "id": "SkellySetName",
-								"name": inputName.value
+                "name": inputName.value
             })
         );
     });
-</script>
-</html>
-</title>
-</head>
-<body>
 
-</body>
+</script>
 </html>
