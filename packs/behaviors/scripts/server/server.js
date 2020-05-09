@@ -74,14 +74,21 @@ serverSystem.cleanWorld = function () {
     this.cleanEntities();
 };
 
-serverSystem.cleanEntities = function () {
+serverSystem.cleanEntities = function (optionalEntity) {
     let allEntities = this.getEntitiesFromQuery(globals.queryAllEntities);
-    let size = allEntities.length;
-    for (let index = 0; index < size; ++index) {
-        if (allEntities[index].__identifier__ !== "minecraft:player") {
-            this.destroyEntity(allEntities[index]);
-        }
+    let filteredEntities;
+    if (!!optionalEntity) {
+        filteredEntities = allEntities.filter((entity) => {
+            return entity.__identifier__ === optionalEntity;
+        });
+    } else {
+        filteredEntities = allEntities.filter((entity) => {
+            return entity.__identifier__ !== "minecraft:player";
+        });
     }
+    filteredEntities.forEach(entity => {
+        this.destroyEntity(entity);
+    });
 };
 
 serverSystem.addGameRules = function() {
@@ -193,10 +200,16 @@ serverSystem.createRandomEndermans = function(interactionPosition) {
     });
 };
 
+serverSystem.onDaytSet = function() {
+    this.cleanEntities("minecraft:enderman");
+};
+
 serverSystem.toggleDayNight = function(interactionPosition) {
     const time = globals.toggleDayNightState? "day": "night";
     if (!globals.toggleDayNightState) {
         this.onNightSet(interactionPosition);
+    } else {
+        this.onDaytSet();
     }
     globals.toggleDayNightState = !globals.toggleDayNightState;
     return time;
