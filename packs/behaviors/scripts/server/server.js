@@ -19,7 +19,7 @@ serverSystem.initialize = function () {
     scriptLoggerConfig.data.log_information = true;
     scriptLoggerConfig.data.log_warnings = true;
     this.broadcastEvent("minecraft:script_logger_config", scriptLoggerConfig);
-    this.registerEventData("guitutorial:player_set_name_skelly", {playerData: null});
+    this.registerEventData("guitutorial:player_show_skelly_hint", {playerData: null});
 };
 
 // per-tick updates
@@ -48,13 +48,13 @@ serverSystem.onBlockInteraction = function(eventData) {
     }
 };
 
-let hasBeenNamed = false;
+let hasAppearedHint = false;
 serverSystem.setSkellyNameInteraction = function(player) {
-    if (!hasBeenNamed) {
-        hasBeenNamed = true;
-        let setSkellyNameEvent = this.createEventData("guitutorial:player_set_name_skelly");
+    if (!hasAppearedHint) {
+        hasAppearedHint = true;
+        let setSkellyNameEvent = this.createEventData("guitutorial:player_show_skelly_hint");
         setSkellyNameEvent.data.playerData = player;
-        this.broadcastEvent("guitutorial:player_set_name_skelly", setSkellyNameEvent);
+        this.broadcastEvent("guitutorial:player_show_skelly_hint", setSkellyNameEvent);
     }
 };
 

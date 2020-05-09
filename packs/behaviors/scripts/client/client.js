@@ -16,8 +16,8 @@ clientSystem.initialize = function () {
     this.listenForEvent("minecraft:ui_event", (eventData) => this.onUIMessage(eventData));
     this.registerEventData("my_events:start_game", {});
     this.listenForEvent(
-        "guitutorial:player_set_name_skelly",
-        (eventData) => this.onSetSkellyName(eventData));
+        "guitutorial:player_show_skelly_hint",
+        (eventData) => this.onShowSkellyHint(eventData));
 
     const scriptLoggerConfig = this.createEventData("minecraft:script_logger_config");
     scriptLoggerConfig.data.log_errors = true;
@@ -41,7 +41,7 @@ clientSystem.onClientEnteredWorld = function(eventData) {
     Utils.broadcastOnChat(this, "Bienvenid@ a minecraft!");
 };
 
-clientSystem.onSetSkellyName = function(eventData) {
+clientSystem.onShowSkellyHint = function(eventData) {
     if (isPlayerEqual(globals.playerData, eventData.data.playerData)) {
         let loadEventData = this.createEventData("minecraft:load_ui");
         loadEventData.data.path = "skelly.html";
