@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title><!DOCTYPE html>
+		<html>
+		<head>
+			<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+			<script src="UIEngine.js"></script>
+			<link rel="stylesheet" href="styles.css" />
+		</head>
+<body>
+<div id="_body_" class="screenBox">
+	<div class="GameMessage">
+		<label for="inputName">Escribe un nombre:</label><br><br>
+		<input type="text" id="inputName" name="inputName"/>
+		<button id="saveName">Guardar</button>
+	</div>
+</div>
+</body>
+
+<script type="text/javascript">
+
+    // Get a handle to the scripting interface on creation.
+    // The script interface can trigger events to the client script
+    let scriptInterface = null;
+    engine.on("facet:updated:core.scripting", function (interface) {
+        scriptInterface = interface;
+    });
+    engine.trigger("facet:request", ["core.scripting"]);
+
+    // Grab the start button element
+    const startButton = document.getElementById("saveName");
+    const inputName = document.getElementById("inputName");
+    // When the start button is pressed send a message to the client script
+    startButton.addEventListener("click", function () {
+        scriptInterface.triggerEvent(`SkellySetName: ${inputName.value}`);
+    });
+</script>
+</html>
+</title>
+</head>
+<body>
+
+</body>
+</html>
