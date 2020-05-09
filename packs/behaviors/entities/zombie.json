@@ -118,16 +118,12 @@
     "components": {
       "minecraft:nameable": {
       },
-
-      // Zombie Components
       "minecraft:type_family": {
         "family": [ "zombie", "undead", "monster", "mob" ]
       },
       "minecraft:collision_box": {
         "width": 0.6,
         "height": 1.9
-      },
-      "minecraft:burns_in_daylight": {
       },
       "minecraft:movement.basic": {
       },
@@ -179,8 +175,6 @@
           "event": "minecraft:start_transforming"
         }
       },
-
-      // Zombie Behaviors
       "minecraft:behavior.melee_attack": {
         "priority": 3,
         "speed_multiplier": 1,

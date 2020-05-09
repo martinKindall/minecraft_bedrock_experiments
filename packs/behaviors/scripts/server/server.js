@@ -126,6 +126,18 @@ serverSystem.createEntities = function () {
             y: 180
         }
     );
+    this.createEntitySetPositionRotation(
+        "minecraft:zombie",
+        {
+            x: 4.5,
+            y: 5,
+            z: 45.0
+        },
+        {
+            x: 0,
+            y: 180
+        }
+    );
 };
 
 serverSystem.createAndExecute3x3FillCommand = function (entity, blockName) {

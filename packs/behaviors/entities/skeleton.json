@@ -201,7 +201,7 @@
             "max_dist": 16
           }
         ],
-        "must_see": false
+        "must_see": true
       },
       "minecraft:behavior.avoid_mob_type": {
         "priority": 4,
