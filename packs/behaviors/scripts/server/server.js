@@ -98,7 +98,7 @@ serverSystem.createEntitySetPositionRotation = function(indentifier, position, r
     rotComponent.data.y = rotation.y;
     this.applyComponentChanges(myEntity, rotComponent);
 
-    this.createAndExecute3x3FillCommand(myEntity, "soul_sand");
+    this.createAndExecute3x3FillCommand(myEntity, "warped_nylium");
 };
 
 serverSystem.createEntities = function () {
