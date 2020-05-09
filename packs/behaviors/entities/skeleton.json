@@ -24,6 +24,12 @@
           "speed_multiplier": 1.0,
           "start_distance": 5,
           "stop_distance": 1
+        },
+        "minecraft:behavior.owner_hurt_by_target": {
+          "priority": 1
+        },
+        "minecraft:behavior.owner_hurt_target": {
+          "priority": 2
         }
       },
       "minecraft:skeleton_wild": {
@@ -164,7 +170,7 @@
             "filters": {
               "test": "is_family",
               "subject": "other",
-              "value": "skeleton"
+              "value": "zombie"
             },
             "max_dist": 16
           },
@@ -195,7 +201,7 @@
             "max_dist": 16
           }
         ],
-        "must_see": true
+        "must_see": false
       },
       "minecraft:behavior.avoid_mob_type": {
         "priority": 4,
