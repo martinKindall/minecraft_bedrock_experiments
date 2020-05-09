@@ -9,33 +9,26 @@
 <body>
 <div id="_body_" class="screenBox">
 	<div class="GameMessage">
-		<p>Escribe un nombre:</p>
-		<input type="text" id="inputName" name="inputName"/>
+		<p class="pStyle">Skelly te ayudará si le das un hueso.</p>
 		<br/><br/>
-		<button id="saveName">Guardar</button>
+		<button class="buttonStyle buttonSize" id="continue">Ok</button>
 	</div>
 </div>
 </body>
 
 <script type="text/javascript">
 
-    // Get a handle to the scripting interface on creation.
-    // The script interface can trigger events to the client script
     let scriptInterface = null;
     engine.on("facet:updated:core.scripting", function (interface) {
         scriptInterface = interface;
     });
     engine.trigger("facet:request", ["core.scripting"]);
 
-    // Grab the start button element
-    const startButton = document.getElementById("saveName");
-    const inputName = document.getElementById("inputName");
-    // When the start button is pressed send a message to the client script
+    const startButton = document.getElementById("continue");
     startButton.addEventListener("click", function () {
         scriptInterface.triggerEvent(
             JSON.stringify({
-                "id": "SkellySetName",
-                "name": inputName.value
+                "id": "SkellySetName"
             })
         );
     });
