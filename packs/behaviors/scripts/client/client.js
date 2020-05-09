@@ -51,7 +51,6 @@ clientSystem.onSetSkellyName = function(eventData) {
 };
 
 clientSystem.onUIMessage = function(eventData) {
-    Utils.broadcastOnChat(this, `ui event: ${JSON.stringify(eventData)}`);
     const uiMessage = JSON.parse(eventData.data);
 
     if (uiMessage.id === "StartPressed") {
