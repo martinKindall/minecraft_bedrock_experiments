@@ -35,7 +35,6 @@ serverSystem.onStartGame = function(eventData) {
 };
 
 serverSystem.onBlockInteraction = function(eventData) {
-    Utils.broadcastOnChat(this, `interaction: ${JSON.stringify(eventData)}`);
     const player = eventData.data.player;
     const blockPosition = eventData.data.block_position;
     if (blockPosition.x === 0 && blockPosition.y === 5 && blockPosition.z === 0) {

@@ -42,7 +42,6 @@ clientSystem.onClientEnteredWorld = function(eventData) {
 };
 
 clientSystem.onSetSkellyName = function(eventData) {
-    Utils.broadcastOnChat(this, `skelly player event: ${JSON.stringify(eventData)}`);
     if (isPlayerEqual(globals.playerData, eventData.data.playerData)) {
         let loadEventData = this.createEventData("minecraft:load_ui");
         loadEventData.data.path = "skelly.html";
@@ -56,22 +55,22 @@ clientSystem.onUIMessage = function(eventData) {
     const uiMessage = JSON.parse(eventData.data);
 
     if (uiMessage.id === "StartPressed") {
-        const unloadEventData = this.createEventData("minecraft:unload_ui");
-        unloadEventData.data.path = "hello.html";
-        this.broadcastEvent("minecraft:unload_ui", unloadEventData);
-
+        this.unloadUI("hello.html");
         this.sendStartGameEvent();
     } else if (uiMessage.id === "SkellySetName") {
-        Utils.broadcastOnChat(this, `it worked: ${uiMessage.name}`);
-        const unloadEventData = this.createEventData("minecraft:unload_ui");
-        unloadEventData.data.path = "skelly.html";
-        this.broadcastEvent("minecraft:unload_ui", unloadEventData);
+        this.unloadUI("skelly.html");
     }
 };
 
 clientSystem.sendStartGameEvent = function() {
     let startEventData = this.createEventData("my_events:start_game");
     this.broadcastEvent("my_events:start_game", startEventData);
+};
+
+clientSystem.unloadUI = function(uiName) {
+    const unloadEventData = this.createEventData("minecraft:unload_ui");
+    unloadEventData.data.path = uiName;
+    this.broadcastEvent("minecraft:unload_ui", unloadEventData);
 };
 
 function isPlayerEqual(playerData1, playerData2) {
