@@ -1,3 +1,4 @@
+import Utils from "../utils/Utils";
 
 const serverSystem = server.registerSystem(0, 0);
 
@@ -32,17 +33,27 @@ serverSystem.onStartGame = function(eventData) {
 };
 
 serverSystem.onBlockInteraction = function(eventData) {
-    this.dayNightLeverInteraction(eventData);
-};
-
-serverSystem.dayNightLeverInteraction = function(eventData) {
     const blockPosition = eventData.data.block_position;
     if (blockPosition.x === 0 && blockPosition.y === 5 && blockPosition.z === 0) {
-        this.executeCommand(
-            `/time set ${toggleDayNight()}`,
-            (commandData) => this.commandCallback(commandData)
-        );
+        this.dayNightLeverInteraction();
+    } else if (blockPosition.x === 4 && blockPosition.y === 4 && blockPosition.z === -2) {
+        this.setSkellyNameInteraction();
     }
+};
+
+let hasBeenNamed = false;
+serverSystem.setSkellyNameInteraction = function() {
+    if (!hasBeenNamed) {
+        hasBeenNamed = true;
+        Utils.broadcastOnChat(this, "opened door");
+    }
+};
+
+serverSystem.dayNightLeverInteraction = function() {
+    this.executeCommand(
+        `/time set ${toggleDayNight()}`,
+        (commandData) => this.commandCallback(commandData)
+    );
 };
 
 serverSystem.commandCallback = function(commandData) {
