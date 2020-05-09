@@ -28,7 +28,11 @@
     let startButton = document.getElementById("_start_");
     // When the start button is pressed send a message to the client script
     startButton.addEventListener("click", function () {
-        scriptInterface.triggerEvent("StartPressed");
+        scriptInterface.triggerEvent(
+            JSON.stringify({
+								"id": "StartPressed"
+						})
+				);
     });
 </script>
 </html>

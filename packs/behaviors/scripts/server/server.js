@@ -19,6 +19,8 @@ serverSystem.initialize = function () {
     scriptLoggerConfig.data.log_information = true;
     scriptLoggerConfig.data.log_warnings = true;
     this.broadcastEvent("minecraft:script_logger_config", scriptLoggerConfig);
+
+    this.registerEventData("guitutorial:player_set_name_skelly", {playerData: null});
 };
 
 // per-tick updates
@@ -33,19 +35,23 @@ serverSystem.onStartGame = function(eventData) {
 };
 
 serverSystem.onBlockInteraction = function(eventData) {
+    Utils.broadcastOnChat(this, `interaction: ${JSON.stringify(eventData)}`);
+    const player = eventData.data.player;
     const blockPosition = eventData.data.block_position;
     if (blockPosition.x === 0 && blockPosition.y === 5 && blockPosition.z === 0) {
         this.dayNightLeverInteraction();
     } else if (blockPosition.x === 4 && blockPosition.y === 4 && blockPosition.z === -2) {
-        this.setSkellyNameInteraction();
+        this.setSkellyNameInteraction(player);
     }
 };
 
 let hasBeenNamed = false;
-serverSystem.setSkellyNameInteraction = function() {
+serverSystem.setSkellyNameInteraction = function(player) {
     if (!hasBeenNamed) {
         hasBeenNamed = true;
-        Utils.broadcastOnChat(this, "opened door");
+        let setSkellyNameEvent = this.createEventData("guitutorial:player_set_name_skelly");
+        setSkellyNameEvent.data.playerData = player;
+        this.broadcastEvent("guitutorial:player_set_name_skelly", setSkellyNameEvent);
     }
 };
 

@@ -34,7 +34,12 @@
     const inputName = document.getElementById("inputName");
     // When the start button is pressed send a message to the client script
     startButton.addEventListener("click", function () {
-        scriptInterface.triggerEvent(`SkellySetName: ${inputName.value}`);
+        scriptInterface.triggerEvent(
+            JSON.stringify({
+                "id": "SkellySetName",
+								"name": inputName.value
+            })
+        );
     });
 </script>
 </html>
