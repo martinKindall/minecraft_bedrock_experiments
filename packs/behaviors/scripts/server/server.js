@@ -1,4 +1,3 @@
-import Utils from "../utils/Utils";
 
 const serverSystem = server.registerSystem(0, 0);
 
@@ -27,10 +26,9 @@ serverSystem.update = function () {
 };
 
 serverSystem.onStartGame = function(eventData) {
-    this.executeCommand("/tp @a 0 6 0 90 0", (commandData) => this.commandCallback(commandData) );
+    this.executeCommand("/tp @a 0 6 -10 0 0", (commandData) => this.commandCallback(commandData) );
     this.cleanWorld();
     this.createEntities();
-    this.experimentOnEntity();
 };
 
 serverSystem.onBlockInteraction = function(eventData) {
@@ -45,18 +43,6 @@ serverSystem.dayNightLeverInteraction = function(eventData) {
             (commandData) => this.commandCallback(commandData)
         );
     }
-};
-
-serverSystem.experimentOnEntity = function() {
-    // let allEntities = this.getEntitiesFromQuery(globals.queryAllEntities);
-    // let size = allEntities.length;
-    // for (let index = 0; index < size; ++index) {
-    //     const currentEntity = allEntities[index];
-    //     if (currentEntity.__identifier__ === "minecraft:llama") {
-    //         const tameComponent = this.getComponent(currentEntity, "minecraft:llama_tamed");
-    //         Utils.broadcastOnChat(this, `Llama : ${JSON.stringify(tameComponent)}`);
-    //     }
-    // }
 };
 
 serverSystem.commandCallback = function(commandData) {
