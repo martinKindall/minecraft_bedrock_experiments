@@ -16,6 +16,26 @@
           }
         }
       },
+      "minecraft:skeleton_tame": {
+        "minecraft:is_tamed": {
+        },
+        "minecraft:behavior.follow_owner": {
+          "priority": 2,
+          "speed_multiplier": 1.0,
+          "start_distance": 5,
+          "stop_distance": 1
+        }
+      },
+      "minecraft:skeleton_wild": {
+        "minecraft:tameable": {
+          "probability": 1,
+          "tame_items": "bone",
+          "tame_event": {
+            "event": "minecraft:on_tame",
+            "target": "self"
+          }
+        }
+      },
       "minecraft:ranged_attack": {
         "minecraft:behavior.ranged_attack": {
           "attack_interval_min": 1,
@@ -215,7 +235,8 @@
       "minecraft:entity_spawned": {
         "add": {
           "component_groups": [
-            "minecraft:ranged_attack"
+            "minecraft:ranged_attack",
+            "minecraft:skeleton_wild"
           ]
         }
       },
@@ -230,6 +251,18 @@
       "minecraft:ranged_mode": {
         "remove": { "component_groups": [ "minecraft:melee_attack" ] },
         "add": { "component_groups": [ "minecraft:ranged_attack" ] }
+      },
+      "minecraft:on_tame": {
+        "remove": {
+          "component_groups": [
+            "minecraft:skeleton_wild"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "minecraft:skeleton_tame"
+          ]
+        }
       }
     }
   }
