@@ -29,7 +29,7 @@ serverSystem.update = function () {
 serverSystem.onStartGame = function(eventData) {
     this.executeCommand("/tp @a 0 6 0 90 0", (commandData) => this.commandCallback(commandData) );
     this.cleanWorld();
-    this.createMyEntity();
+    this.createEntities();
     this.experimentOnEntity();
 };
 
@@ -73,7 +73,6 @@ serverSystem.cleanEntities = function () {
     let size = allEntities.length;
     for (let index = 0; index < size; ++index) {
         if (allEntities[index].__identifier__ !== "minecraft:player") {
-            // Utils.broadcastOnChat(this, `destroying: ${JSON.stringify(allEntities[index])}`);
             this.destroyEntity(allEntities[index]);
         }
     }
@@ -86,20 +85,47 @@ serverSystem.addGameRules = function() {
     this.executeCommand("/gamerule doDaylightCycle false", (commandData) => this.commandCallback(commandData) );
 };
 
-serverSystem.createMyEntity = function () {
-    let myEntity = this.createEntity("entity", "minecraft:llama");
+serverSystem.createEntitySetPositionRotation = function(indentifier, position, rotation) {
+    let myEntity = this.createEntity("entity", indentifier);
     let posComponent = this.createComponent(myEntity, "minecraft:position");
-    posComponent.data.x = -4.5;
-    posComponent.data.y = 5;
-    posComponent.data.z = 0.5;
+    posComponent.data.x = position.x;
+    posComponent.data.y = position.y;
+    posComponent.data.z = position.z;
     this.applyComponentChanges(myEntity, posComponent);
 
     let rotComponent = this.createComponent(myEntity, "minecraft:rotation");
-    rotComponent.data.x = 0;
-    rotComponent.data.y = 180;
+    rotComponent.data.x = rotation.x;
+    rotComponent.data.y = rotation.y;
     this.applyComponentChanges(myEntity, rotComponent);
 
     this.createAndExecute3x3FillCommand(myEntity, "soul_sand");
+};
+
+serverSystem.createEntities = function () {
+    this.createEntitySetPositionRotation(
+        "minecraft:llama",
+        {
+            x: -4.5,
+            y: 5,
+            z: 0.5
+        },
+        {
+            x: 0,
+            y: 180
+        }
+    );
+    this.createEntitySetPositionRotation(
+        "minecraft:skeleton",
+        {
+            x: 4.5,
+            y: 5,
+            z: 0.0
+        },
+        {
+            x: 0,
+            y: 180
+        }
+    );
 };
 
 serverSystem.createAndExecute3x3FillCommand = function (entity, blockName) {

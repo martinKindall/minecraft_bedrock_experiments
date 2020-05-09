@@ -71,17 +71,13 @@
         "height": 1.9
       },
       "minecraft:type_family": {
-        "family": [ "skeleton", "undead", "monster", "mob" ]
+        "family": [ "skeleton", "mob" ]
       },
       "minecraft:breathable": {
         "total_supply": 15,
         "suffocate_time": 0,
         "breathes_water": true
       },
-
-      "minecraft:burns_in_daylight": {
-      },
-
       "minecraft:health": {
         "value": 20,
         "max": 20
@@ -148,7 +144,7 @@
             "filters": {
               "test": "is_family",
               "subject": "other",
-              "value": "player"
+              "value": "skeleton"
             },
             "max_dist": 16
           },
@@ -180,10 +176,6 @@
           }
         ],
         "must_see": true
-      },
-      "minecraft:behavior.flee_sun": {
-        "priority": 2,
-        "speed_multiplier": 1
       },
       "minecraft:behavior.avoid_mob_type": {
         "priority": 4,
