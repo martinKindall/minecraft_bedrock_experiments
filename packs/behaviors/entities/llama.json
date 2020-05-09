@@ -536,7 +536,7 @@
           {
             "randomize": [
               {
-                "weight": 25,
+                "weight": 0,
                 "add": {
                   "component_groups": [
                     "minecraft:llama_creamy"
@@ -544,7 +544,7 @@
                 }
               },
               {
-                "weight": 25,
+                "weight": 0,
                 "add": {
                   "component_groups": [
                     "minecraft:llama_white"
@@ -552,7 +552,7 @@
                 }
               },
               {
-                "weight": 25,
+                "weight": 100,
                 "add": {
                   "component_groups": [
                     "minecraft:llama_brown"
@@ -560,7 +560,7 @@
                 }
               },
               {
-                "weight": 25,
+                "weight": 0,
                 "add": {
                   "component_groups": [
                     "minecraft:llama_gray"
